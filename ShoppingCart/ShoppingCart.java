@@ -22,7 +22,7 @@ import com.shoppingcart.item.ShoppedItem;
  */
 
 public class ShoppingCart {
-    
+
     private static final Pattern ITEM_PATTERN = Pattern.compile("^(\\d+)\\s+(.*?)\\s+at\\s+(\\d+(?:\\.\\d+)?)$");
 
     public static Logger logger = Logger.getLogger(ShoppingCart.class.getName());
@@ -72,32 +72,52 @@ public class ShoppingCart {
                 System.out.println("   [✗ Invalid Format] Expected format: '<quantity> <item> at <price per item>'");
             }
         }
-        scanner.close();
+        scanner.close();        
+        shoppingcart.print(cart);
+    }
 
+    /**
+     * @author Aditya
+     * @param cart
+     * @throws Exception
+     */
+
+    public void print(List<String> cart) throws Exception {
         // Print final list of items entered
         System.out.println("\n==================================================");
         System.out.println(" ITEMS (" + cart.size() + " total) ");
         System.out.println("==================================================");
-
         BillingImpl billing = new BillingImpl();
         String[] itemList = new String[cart.size()];
-
-        for (int i = 0; i < cart.size(); i++) {
-            itemList[i] = cart.get(i);
-            System.out.println(" " + itemList[i]);
+        try{
+            for (int i = 0; i < cart.size(); i++) {
+                itemList[i] = cart.get(i);
+                System.out.println(" " + itemList[i]);
+            }
+        }catch(Exception e){
+            System.out.println("Exception in print method : "+e.getMessage());
         }
+  
+        //print the receipt
         System.out.println("\n==================================================");
         System.out.println("                     RECEIPT                      ");
         System.out.println("==================================================");
-
-        List<ShoppedItem> list = billing.parseAndCalculate(itemList);
-        billing.totalCost(list);
-        billing.totalTax(list);
+        List<ShoppedItem> list = null;
+        try{
+            list = billing.parseAndCalculate(itemList);
+            billing.totalCost(list);
+            billing.totalTax(list);
         
-        billing.print(list, System.out);
+            billing.print(list, System.out);
+        }catch(Exception ex){
+            System.out.println("exception in print methood : "+ex.getMessage());
 
+        }            
     }
 
+    /**
+     * @throws Exception
+     */
     public void readShoppingCart() throws Exception {
         logger.setLevel(Level.INFO);
         Properties prop = new Properties();
@@ -109,11 +129,15 @@ public class ShoppingCart {
         while (it.hasNext()) {
             String key = (String) it.next();
             String value = prop.getProperty(key);
-            System.setProperty(key, value);            
+            System.setProperty(key, value);
             ItemCollection.htItems.put(key, value);
         }
-    }
+    } 
 
+    /**
+     * 
+     * @throws Exception
+     */
     public void getLogLevel() throws Exception {
         Properties config = new Properties();
 
@@ -128,7 +152,7 @@ public class ShoppingCart {
             logger.setLevel(targetLevel);
 
             Logger rootLogger = LogManager.getLogManager().getLogger("");
-            if(rootLogger != null){
+            if (rootLogger != null) {
                 rootLogger.setLevel(targetLevel);
             }
             System.out.println("Logger level successfully set to: " + logger.getLevel());

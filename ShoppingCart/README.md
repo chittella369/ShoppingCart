@@ -45,7 +45,7 @@ The application uses three configuration files located in the project root:
    - example 2 : `1 imported box of chocolates at 10.00`
    - example 3 : `1 imported luxury watch at 2500`
 
-   Basic tax is applicable on all items except on the exempted ones mentioned in the tax.properties.file.
+   Basic tax is applicable on all items except on the exempted ones mentioned in the shoppingcart.properties.file.
    For an Imported item, both basic tax and import tax is applicable.
    For an Imported Luxury item, all 3 taxes (i.e. basic, import and luxury) taxes are applicable.
 6. The app calculates taxes and prints the receipt.

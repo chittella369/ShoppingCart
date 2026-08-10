@@ -41,8 +41,14 @@ The application uses three configuration files located in the project root:
 3. It loads `tax.properties` to configure the applicable tax rates.
 4. The user enters items in the format:
    - `<quantity> <item name> at <price per unit>`
-   - example: `1 imported box of chocolates at 10.00`
-5. The app calculates taxes and prints the receipt.
+   - example 1 : `1 book at 50`
+   - example 2 : `1 imported box of chocolates at 10.00`
+   - example 3 : `1 imported luxury watch at 2500`
+
+   Basic tax is applicable on all items except on the exempted ones mentioned in the tax.properties.file.
+   For an Imported item, both basic tax and import tax is applicable.
+   For an Imported Luxury item, all 3 taxes (i.e. basic, import and luxury) taxes are applicable.
+6. The app calculates taxes and prints the receipt.
 
 ## Running the Application
 
